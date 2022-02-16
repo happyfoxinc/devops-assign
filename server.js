@@ -1,13 +1,17 @@
 const http = require('http');
 
 const PORT = process.env.PORT
+
+const logPref = function () {
+    return "[" + process.pid + "] " + new Date() + " - "
+}
  
 const requestListener = function (req, res) {
     let rand = Math.floor(Math.random() * 10)
     if (rand % 2 == 0) {
-        console.log(`${new Date()} Success: ${rand}`)
+        console.log(logPref() + `Success: ${rand}`)
     } else {
-        console.error(`${new Date()} Failure: ${rand}`)
+        console.error(logPref() + `Failure: ${rand}`)
     }
 
     res.writeHead(200);
@@ -16,5 +20,5 @@ const requestListener = function (req, res) {
 
 let server = http.createServer(requestListener);
 server.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}..`)
+    console.log(logPref() + `Listening on port ${PORT}..`)
 });
